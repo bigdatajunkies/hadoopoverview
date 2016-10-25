@@ -34,5 +34,9 @@ The input to reduce method from the mapper after the sort and shuffle phase woul
 associated values with it. For example here we have multiple values for a single key from our mapper like 
 <apple,1> , <apple,1> , <apple,1> , <apple,1> . This key values would be fed into the reducer as < apple, {1,1,1,1} > 
 
+The functionality of the reduce method is as follows
+1.       Initaize a variable ‘sum’ as 0
+2.       Iterate through all the values with respect to a key and sum up all of them
+3.       Push to the output collector the Key and the obtained sum as value
 
 **/
