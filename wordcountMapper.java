@@ -4,14 +4,15 @@ import java.util.StringTokenizer;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 
-public class WordCountMapper extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable>
+public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 {
       //hadoop supported data types
       private final static IntWritable one = new IntWritable(1);
       private Text word = new Text();
      
-      //map method that performs the tokenizer job and framing the initial key value pairs
-      public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException
+      //map method that performs the tokenizer job and framing the initial key value pairs 
+      public void map(LongWritable key, Text value,
+                    Mapper.Context context) throws IOException, InterruptedException 
       {
             //taking one line at a time and tokenizing the same
             String line = value.toString();
@@ -22,7 +23,7 @@ public class WordCountMapper extends MapReduceBase implements Mapper<LongWritabl
             {
                word.set(tokenizer.nextToken());
                //sending to output collector which inturn passes the same to reducer
-                 output.collect(word, one);
+                 context.write(word, one);
             }
        }
 }
@@ -49,5 +50,5 @@ public class WordCountMapper extends MapReduceBase implements Mapper<LongWritabl
 3.       Use a tokenizer to split the line into words
 4.       Iterate through each word and a form key value pairs as
 a.       Assign each work from the tokenizer(of String type) to a Text ‘word’
-b.      Form key value pairs for each word as <word,one> and push it to the output collector
+b.      Form key value pairs for each word as <word,one> and push it to the context.write
 **/
