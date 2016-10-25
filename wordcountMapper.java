@@ -26,3 +26,15 @@ public class WordCountMapper extends MapReduceBase implements Mapper<LongWritabl
             }
        }
 }
+
+
+/**
+ Mapper<LongWritable, Text, Text, IntWritable> , 
+ it refers to the data type of input and output key value pairs specific to the mapper or rateher the map method,
+ ie Mapper<Input Key Type, Input Value Type, Output Key Type, Output Value Type>
+ 
+ the input to a mapper is a single line, so this Text (one input line) forms the input value. 
+ The input key would a long value assigned in default based on the position of Text in input file. 
+ Our output from the mapper is of the format “Word, 1“ hence the data type of our 
+ output key value pair is <Text(String),  IntWritable(int)>
+**/
