@@ -4,10 +4,10 @@ import java.util.Iterator;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 
-public class WordCountReducer extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable>
+public static class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 {
       //reduce method accepts the Key Value pairs from mappers, do the aggregation based on keys and produce the final out put
-      public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException
+      public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
       {
             int sum = 0;
             /*iterates through all the values available with a key and add them together and give the
@@ -16,7 +16,7 @@ public class WordCountReducer extends MapReduceBase implements Reducer<Text, Int
           {
                sum += values.next().get();
           }
-          output.collect(key, new IntWritable(sum));
+          context.write(key, new IntWritable(sum));
       }
 }
 
@@ -37,6 +37,6 @@ associated values with it. For example here we have multiple values for a single
 The functionality of the reduce method is as follows
 1.       Initaize a variable ‘sum’ as 0
 2.       Iterate through all the values with respect to a key and sum up all of them
-3.       Push to the output collector the Key and the obtained sum as value
+3.       Push to the context.write the Key and the obtained sum as value
 
 **/
