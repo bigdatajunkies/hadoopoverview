@@ -1,0 +1,8 @@
+sqoop import --connect jdbc:mysql://quickstart.cloudera:3306/retail_db \ --table myTable -m 1
+
+sqoop codegen --connect jdbc:mysql://quickstart.cloudera:3306/retail_db \  --table myTable --class-name myTable
+
+sqoop import \ jdbc:mysql://quickstart.cloudera:3306/retail_db \ --username sqoop \ --password sqoop \ --table cities 
+
+
+
